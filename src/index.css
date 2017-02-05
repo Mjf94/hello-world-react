@@ -3,3 +3,14 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+button  {
+    color: blue;
+}
+a   {
+    color: gray;
+}
+
+p   {
+    margin-left: 10px;
+}
