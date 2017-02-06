@@ -153,15 +153,81 @@ class LogInCtrl extends React.Component {
     }
 }
 
-class NumList extends React.Component{
-    render(){
-        const nums=[1,2,3,4,5];
-        const numList=nums.map((number)=><li key={number.toString()}>{number*3}</li>)
+class NumList extends React.Component {
+    render() {
+        const nums = [1, 2, 3, 4, 5];
+        const numList = nums.map((number) => <li key={number.toString()}>{number * 3}</li>)
         return (<div>
             <ul>{numList}</ul>
         </div>)
     }
 }
+//Read more about uncontrolled component for alternative method
+class SampleForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {value: '', text: 'Write something', choice: 'A'};
+        //this.handleChange = this.handleChange.bind(this);
+
+    }
+
+    /*
+    too complicated
+    handleValue(event) {
+        this.setState({value: event.target.value})
+    }
+
+    handleText(event) {
+        this.setState({text: event.target.value})
+    }
+
+    handleChoice(event) {
+        this.setState({choice: event.target.value})
+    }*/
+
+    /*Handle multiple inputs in one function*/
+    handleInput(e){
+        let value=e.target.value;
+        let attribute=e.target.name;
+        //don't forget the []
+        this.setState({[attribute]:value});
+    }
+    handleSubmit(e) {
+        console.log("On Submit")
+        alert(this.state.value + "\n" + this.state.text+"\n"+this.state.choice);
+        e.preventDefault();
+    }
+
+    render() {
+        return (
+            <div>
+                <form onSubmit={(e) => this.handleSubmit(e)}>
+                    {/*Remember to pass the event as a parameter in arrow function otherwise the event will be undefined*/}
+                    {/*Value: <input type="text" value={this.state.value} onChange={(e) => this.handleValue(e)}/>
+                    Text: <input type="text" value={this.state.text} onChange={(e) => this.handleText(e)}/>
+                    Selection:
+                    <select value={this.state.choice} onChange={(e) => this.handleChoice(e)}>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>*/}
+                    Value: <input name="value" type="text" value={this.state.value} onChange={(e) => this.handleInput(e)}/>
+                    Text: <input name="text" type="text" value={this.state.text} onChange={(e) => this.handleInput(e)}/>
+                    Selection:
+                    <select name="choice" value={this.state.choice} onChange={(e) => this.handleInput(e)}>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                    <button type="submit" value="Submit">Submit</button>
+                </form>
+            </div>
+        )
+    }
+}
+
 
 const element =
     (<div>
@@ -169,6 +235,7 @@ const element =
         <Toggle/>
         <LogInCtrl/>
         <NumList/>
+        <SampleForm/>
         <Welcome name="Sara" age="18" gender="female"/>
     </div>);
 ReactDOM.render(
